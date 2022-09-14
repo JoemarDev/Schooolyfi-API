@@ -10,8 +10,11 @@ const mongoSanitize = require('express-mongo-sanitize');
 // Database
 const connectDB = require('./src/database/connection');
 
-// Routes 
-const studentRouter = require('./src/routes/studentRoutes');
+// Router 
+const studentRouter = require('./src/routes/student-routes');
+const teacherRouter = require('./src/routes/teacher-routes');
+const subjectRouter = require('./src/routes/subject-routes');
+const classScheduleRouter = require('./src/routes/class-schedule-routes');
 
 // Middlewares
 const NotFoundMiddleware = require('./src/middleware/not-found-middleware');
@@ -22,14 +25,20 @@ app.use(express.json());
 app.use(mongoSanitize());
 
 app.get('/' , (req,res) => {
-    res.send("Welcome to Schoole Management API's");
-})
+    res.send("Welcome to School Management API's");
+});
 
-
+// use routers
 app.use('/api/v1/students',studentRouter);
+app.use('/api/v1/teachers' , teacherRouter);
+app.use('/api/v1/subjects' , subjectRouter);
+app.use('/api/v1/class-schedule' , classScheduleRouter);
 
+
+// use middlewares
 app.use(NotFoundMiddleware);
 app.use(ErrorHandlerMiddlware);
+
 
 const port = process.env.PORT || 3000;
 

@@ -2,7 +2,7 @@
 const paginateResult = async({p_page , p_limit , result , DataModel , query}) => {
     
     const page = Number(p_page) || 1;
-    const limit = Number(p_limit)  || 1;
+    const limit = Number(p_limit)  || 10;
     const skip = (page - 1) * limit;
 
     result.skip(skip).limit(limit);

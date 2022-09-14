@@ -1,6 +1,7 @@
 const CustomError = require('../errors/index');
 const {StatusCodes} = require('http-status-codes');
 const Student = require('../model/Student');
+const ClassSchedule = require('../model/ClassSchedule');
 
 const {paginateResult} = require('../util');
 
@@ -38,6 +39,7 @@ const getStudents = async(req,res) => {
         numOfPages : paginate.numOfPages,
         page : req.query.page || 1,
     });
+
 }
 
 const createStudents = async(req,res) => {
@@ -106,11 +108,28 @@ const removeStudent = async(req,res) => {
     res.status(StatusCodes.OK).json({msg : 'Student Deleted from the records'});
 }
 
+const getStudentSchedule = async(req,res) => {
+
+    // Tempory until the auth is finish
+    
+    req.user = {userId : "6321ad74aeadb35400425791"};
+
+    const classSchedule = await ClassSchedule.find({student : req.user.userId})
+        .select("teacher subject")   
+        .populate({path : 'teacher' , select : 'firstName email' })
+        .populate({path : 'subject' , select : 'name code'});
+
+    res.status(StatusCodes.OK).json(classSchedule);
+
+}
+
+
 
 module.exports = {
     getStudents,
     getSingleStudent,
     updateStudent,
     removeStudent,
-    createStudents
+    createStudents,
+    getStudentSchedule
 }
