@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
+
+// Middlewares
+const {AuthenticateUser , AuthorizedPermission} = require('../middleware/authentication-middleware');
+
+
 // controllers
 const {
     getStudents,
@@ -8,18 +13,20 @@ const {
     updateStudent,
     removeStudent,
     createStudents,
-    getStudentSchedule
+    getStudentSchedule,
+    getStudentProfile
 } = require('../controller/student-controller');
 
 router.route('/')
     .get(getStudents)
     .post(createStudents);
 
-router.route('/schedule').get(getStudentSchedule);
+router.route('/schedule').get(AuthenticateUser,getStudentSchedule);
+router.route('/profile').get(AuthenticateUser,AuthorizedPermission('student'),getStudentProfile);
 
 router.route('/:id')
     .get(getSingleStudent)
-    .patch(updateStudent)
-    .delete(removeStudent);
+    .patch(AuthenticateUser,AuthorizedPermission('admin'),updateStudent)
+    .delete(AuthenticateUser,AuthorizedPermission('admin'),removeStudent);
 
 module.exports = router;

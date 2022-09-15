@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+// Middlewares
+const {AuthenticateUser , AuthorizedPermission} = require('../middleware/authentication-middleware');
 
 const {
     createClassSchedule,
@@ -11,13 +13,13 @@ const {
 } = require('../controller/class-schedule-controller');
 
 router.route('/')
-    .get(getAllClassSchedule)
-    .post(createClassSchedule);
+    .get(AuthenticateUser,getAllClassSchedule)
+    .post(AuthenticateUser,AuthorizedPermission('admin' , 'teacher'),createClassSchedule);
 
 router.route('/:id')
-    .get(getSingleClassSchedule)
-    .patch(updateClassSchedule)
-    .delete(removeClassSchedule);
+    .get(AuthenticateUser,getSingleClassSchedule)
+    .patch(AuthenticateUser,AuthorizedPermission('admin'),updateClassSchedule)
+    .delete(AuthenticateUser,AuthorizedPermission('admin'),removeClassSchedule);
 
 module.exports = router;
 

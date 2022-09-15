@@ -5,6 +5,7 @@ const {paginateResult} = require('../util');
 const CustomError = require('../errors/index');
 const mongoose = require('mongoose');
 
+
 const createTeacher = async(req,res) => {
 
     const {
@@ -44,7 +45,7 @@ const getAllTeacher = async(req,res) => {
         }
     }
 
-    const teacher =  Teacher.find(queryObject);
+    const teacher =  Teacher.find(queryObject).select('-password');;
     
     const paginate = await paginateResult({
         p_page : req.query.page , 
@@ -68,7 +69,7 @@ const getSingleTeacher = async(req,res) => {
 
     const {id:teacherId} = req.params;
 
-    const teacher = await Teacher.findOne({_id : teacherId});
+    const teacher = await Teacher.findOne({_id : teacherId}).select('-password');;
 
     if(!teacher) {
         throw new CustomError.NotFoundError(`No Teacher with id ${teacherId}`);
@@ -108,14 +109,22 @@ const removeTeacher = async(req,res) => {
 
 }
 
+const getTeacherProfile = async(req,res) => {
+    const {user_id} = req.user;
+
+    const teacher = Teacher.findOne({_id : user_id}).select('-password');;
+
+    if(!teacher) {
+        throw new CustomError.NotFoundError('Teacher does not exists');
+    }
+
+    res.status(StatusCodes.OK).json({teacher});
+}
+
 const getTeacherSchedule = async(req,res) => {
     
-    // Tempory until the auth is finish
-
-    req.user = {userId : "6321c0fc652bd28c329faae6"};
-
-    let testQuery = await ClassSchedule.aggregate([
-        {$match : {teacher: mongoose.Types.ObjectId(req.user.userId)}},
+    let classSchedule = await ClassSchedule.aggregate([
+        {$match : {teacher: mongoose.Types.ObjectId(req.user.user_id)}},
         {$group : {
             _id:{ subject:"$subject",},
             student : { $addToSet: '$student' },
@@ -144,11 +153,7 @@ const getTeacherSchedule = async(req,res) => {
         }
     ]);
 
-
-    
-    res.status(StatusCodes.OK).json(testQuery);
-
-
+    res.status(StatusCodes.OK).json(classSchedule);
 }
 
 module.exports = {
@@ -157,5 +162,6 @@ module.exports = {
     getSingleTeacher,
     updateTeacher,
     removeTeacher,
-    getTeacherSchedule
+    getTeacherSchedule,
+    getTeacherProfile
 }

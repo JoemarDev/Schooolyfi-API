@@ -1,6 +1,6 @@
 const Stundent = require('../model/Student');
 const Teacher = require('../model/Teacher');
-const Subject = require('../model/Suject');
+const Subject = require('../model/Subject');
 const ClassSchedule = require('../model/ClassSchedule');
 const CustomError = require('../errors');
 const { StatusCodes } = require('http-status-codes');
@@ -35,6 +35,7 @@ const createClassSchedule = async(req,res) => {
 
 const updateClassSchedule = async(req,res) => {
     const {id : classScheduleId} = req.params;
+    
     const {time } = req.body;
 
     if(!time) {
@@ -57,8 +58,20 @@ const updateClassSchedule = async(req,res) => {
 }
 
 const getAllClassSchedule = async(req,res) => {
+    
+    let queryObject = {};
 
-    const classSchedule = await ClassSchedule.find({})
+    if(req.user.user_type != 'admin') {
+        if(req.user.user_type == 'teacher') {
+            queryObject.teacher = req.user.user_id;
+        }
+
+        if(req.user.user_type == 'student') {
+            queryObject.student = req.user.user_id;
+        }
+    }
+
+    const classSchedule = await ClassSchedule.find(queryObject)
         .populate({path : 'student' , select : 'firstName email' })
         .populate({path : 'teacher' , select : 'firstName email' })
         .populate({path : 'subject' , select : 'name code'});
@@ -69,6 +82,7 @@ const getAllClassSchedule = async(req,res) => {
 const removeClassSchedule = async(req,res) => {
 
     const {id : classScheduleId} = req.params;
+
     const classSchedule = await ClassSchedule.findOne({_id : classScheduleId});
     
     if(!classSchedule) {
@@ -83,10 +97,24 @@ const removeClassSchedule = async(req,res) => {
 
 const getSingleClassSchedule = async(req,res) => {
     const {id : classScheduleId} = req.params;
-    const classSchedule = await ClassSchedule.find({_id : classScheduleId })
+    const classSchedule = await ClassSchedule.findOne({_id : classScheduleId })
         .populate({path : 'student' , select : 'firstName email' })
         .populate({path : 'teacher' , select : 'firstName email' })
         .populate({path : 'subject' , select : 'name code'});
+
+    if(req.user.user_type != 'admin') {
+        if(req.user.user_type == 'teacher') {
+            if(classSchedule.teacher._id.toString() !== req.user.user_id) {
+                throw new CustomError.UnAuthorizedError('Permission Denied');
+            }
+        }
+
+        if(req.user.user_type == 'student') {
+            if(classSchedule.student._id.toString() !== req.user.user_id) {
+                throw new CustomError.UnAuthorizedError('Permission Denied');
+            }
+        }
+    }
 
     res.status(StatusCodes.OK).json(classSchedule);
 }

@@ -22,7 +22,7 @@ const getStudents = async(req,res) => {
         }
     }
 
-    const students =  Student.find(queryObject);
+    const students =  Student.find(queryObject).select('-password');
     
     const paginate = await paginateResult({
         p_page : req.query.page , 
@@ -67,7 +67,7 @@ const getSingleStudent = async(req,res) => {
 
     const {id:studentId} = req.params;
 
-    const student = await Student.findOne({_id : studentId});
+    const student = await Student.findOne({_id : studentId}).select('-password');
 
     if(!student) {
         throw new CustomError.NotFoundError(`No student with id ${studentId}`);
@@ -123,6 +123,20 @@ const getStudentSchedule = async(req,res) => {
 
 }
 
+const getStudentProfile = async(req,res) => {
+    const {user_id} = req.user;
+
+    const student = Student.findOne({_id : user_id}).select('-password');
+
+    if(!student) {
+        throw new CustomError.NotFoundError('Student does not exists');
+    }
+
+    res.status(StatusCodes.OK).json({student});
+}
+
+
+
 
 
 module.exports = {
@@ -131,5 +145,6 @@ module.exports = {
     updateStudent,
     removeStudent,
     createStudents,
-    getStudentSchedule
+    getStudentSchedule,
+    getStudentProfile
 }

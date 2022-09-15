@@ -1,5 +1,5 @@
 const CustomError = require('../errors');
-const Subject = require('../model/Suject');
+const Subject = require('../model/Subject');
 const { StatusCodes } = require('http-status-codes');
 
 const createSubject = async(req,res) => {

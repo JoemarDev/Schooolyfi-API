@@ -2,24 +2,31 @@ const express = require('express');
 
 const router = express.Router();
 
+// Middlewares
+const {AuthenticateUser , AuthorizedPermission} = require('../middleware/authentication-middleware');
+
+
 const {
     createTeacher,
     getAllTeacher,
     getSingleTeacher,
     updateTeacher,
     removeTeacher,
-    getTeacherSchedule
+    getTeacherSchedule,
+    getTeacherProfile
 } = require('../controller/teacher-controller');
 
 router.route('/')
-    .get(getAllTeacher)
-    .post(createTeacher);
+    .get(AuthenticateUser,AuthorizedPermission('admin'),getAllTeacher)
+    .post(AuthenticateUser,AuthorizedPermission('admin'),createTeacher);
 
-router.route('/schedule').get(getTeacherSchedule);
+router.route('/schedule').get(AuthenticateUser,AuthorizedPermission('admin' , 'teacher'),getTeacherSchedule);
+router.route('/profile').get(AuthenticateUser,AuthorizedPermission('teacher'),getTeacherProfile);
+
 
 router.route('/:id')
-    .get(getSingleTeacher)
-    .patch(updateTeacher)
-    .delete(removeTeacher);
+    .get(AuthenticateUser,AuthorizedPermission('admin'),getSingleTeacher)
+    .patch(AuthenticateUser,AuthorizedPermission('admin'),updateTeacher)
+    .delete(AuthenticateUser,AuthorizedPermission('admin'),removeTeacher);
 
 module.exports = router;

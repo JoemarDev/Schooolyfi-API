@@ -1,6 +1,16 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcryptjs');
 const TeacherSchema = mongoose.Schema({
+    userName : {
+        type : String,
+        required : [true , 'Please provide a username'],
+        unique : true,
+    },
+    password : {
+        type : String,
+        required : [true, 'Please provide a password'],
+    },
     firstName : {
         type : String,
         required : [true , 'Please provde student firstname'],
@@ -38,6 +48,18 @@ const TeacherSchema = mongoose.Schema({
         unique: true,
     },
 });
+
+TeacherSchema.pre('save', async function() {
+    if(!this.isModified('password')) return;
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password , salt);
+});
+
+TeacherSchema.methods.comparePassword = async function (candidatePassword)  {
+    const isMatch = await bcrypt.compare(candidatePassword , this.password);
+    return isMatch;
+};
+
 
 
 module.exports = mongoose.model('Teacher' , TeacherSchema);

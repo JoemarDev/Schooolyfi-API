@@ -9,13 +9,17 @@ const {
     removeSubject
 } = require('../controller/subject-controller');
 
+// Middlewares
+const {AuthenticateUser , AuthorizedPermission} = require('../middleware/authentication-middleware');
+
+
 router.route('/')
-    .get(getAllSujects)
-    .post(createSubject);
+    .get(AuthenticateUser,getAllSujects)
+    .post(AuthenticateUser,AuthorizedPermission('admin' , 'teacher'),createSubject);
 
 router.route('/:id')
-    .get(getSingleSubjects)
-    .patch(updateSubject)
-    .delete(removeSubject);
+    .get(AuthenticateUser,getSingleSubjects)
+    .patch(AuthenticateUser,AuthorizedPermission('admin'),updateSubject)
+    .delete(AuthenticateUser,AuthorizedPermission('admin'),removeSubject);
 
 module.exports = router;
