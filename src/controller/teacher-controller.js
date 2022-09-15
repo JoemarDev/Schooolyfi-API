@@ -1,5 +1,5 @@
 const Teacher = require('../model/Teacher');
-const ClassSchedule = require('../model/ClassSchedule');
+const ClassSchedule = require('../model/Student-Schedule');
 const {StatusCodes} = require('http-status-codes');
 const {paginateResult} = require('../util');
 const CustomError = require('../errors/index');
@@ -122,38 +122,8 @@ const getTeacherProfile = async(req,res) => {
 }
 
 const getTeacherSchedule = async(req,res) => {
-    
-    let classSchedule = await ClassSchedule.aggregate([
-        {$match : {teacher: mongoose.Types.ObjectId(req.user.user_id)}},
-        {$group : {
-            _id:{ subject:"$subject",},
-            student : { $addToSet: '$student' },
-            count:{$sum:1},
-        }},
-        {
-            $lookup:{
-                from: "students",
-                localField: "student", //this is the _id user from tests
-                foreignField: "_id", //this is the _id from users
-                as: "student"
-            },  
-        },
-        { $addFields: {
-                student: {
-                    '$map': {
-                        input: '$student',
-                        in: {
-                            _id : '$$this._id',
-                            firstName: '$$this.firstName',
-                            lastName: '$$this.lastName'
-                        }
-                    }
-                }
-            }
-        }
-    ]);
-
-    res.status(StatusCodes.OK).json(classSchedule);
+   
+    res.status(StatusCodes.OK).send("Teacher Schedule");
 }
 
 module.exports = {

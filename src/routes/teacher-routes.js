@@ -18,7 +18,7 @@ const {
 
 router.route('/')
     .get(AuthenticateUser,AuthorizedPermission('admin'),getAllTeacher)
-    .post(AuthenticateUser,AuthorizedPermission('admin'),createTeacher);
+    .post(AuthenticateUser,AuthorizedPermission('admin','all'),createTeacher);
 
 router.route('/schedule').get(AuthenticateUser,AuthorizedPermission('admin' , 'teacher'),getTeacherSchedule);
 router.route('/profile').get(AuthenticateUser,AuthorizedPermission('teacher'),getTeacherProfile);

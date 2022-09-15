@@ -1,7 +1,7 @@
 const CustomError = require('../errors/index');
 const {StatusCodes} = require('http-status-codes');
 const Student = require('../model/Student');
-const ClassSchedule = require('../model/ClassSchedule');
+const StudentSchedule = require('../model/Student-Schedule');
 
 const {paginateResult} = require('../util');
 
@@ -109,18 +109,18 @@ const removeStudent = async(req,res) => {
 }
 
 const getStudentSchedule = async(req,res) => {
+    const studentSchedule = await StudentSchedule.find({})
+        .select('-student')
+        .populate({path : 'subjectSchedule' , populate : {
+            path : 'teacher',
+            select : 'firstName lastName email',
+        }})
+        .populate({path : 'subjectSchedule' , populate : {
+            path : 'subject',
+            select : 'name code description',
+        }})
 
-    // Tempory until the auth is finish
-    
-    req.user = {userId : "6321ad74aeadb35400425791"};
-
-    const classSchedule = await ClassSchedule.find({student : req.user.userId})
-        .select("teacher subject")   
-        .populate({path : 'teacher' , select : 'firstName email' })
-        .populate({path : 'subject' , select : 'name code'});
-
-    res.status(StatusCodes.OK).json(classSchedule);
-
+    res.status(StatusCodes.OK).json(studentSchedule);
 }
 
 const getStudentProfile = async(req,res) => {

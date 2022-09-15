@@ -18,6 +18,9 @@ const AuthenticateUser = async(req,res,next) => {
 
 const AuthorizedPermission = (...roles) => {
     return (req,res,next) => {
+        if(roles.includes('all')) {
+            return next()
+        }
         if(!roles.includes(req.user.user_type)) {
             throw new CustomError.UnAuthorizedError(`Permission Denied`)
         }

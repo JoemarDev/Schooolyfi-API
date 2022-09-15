@@ -2,7 +2,7 @@ require('dotenv').config();
 const Student = require('./src/model/Student');
 const Teacher = require('./src/model/Teacher');
 const Subject = require('./src/model/Subject');
-const ClassSchedule = require('./src/model/ClassSchedule');
+const ClassSchedule = require('./src/model/Student-Schedule');
 const connectDB = require('./src/database/connection');
 
 const ResetDatabase = async() => {
