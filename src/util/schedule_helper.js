@@ -1,5 +1,5 @@
 const StudentSchedule = require('../model/Student-Schedule');
-const SubjecSchedule = require('../model/Subject-Schedule');
+const SubjectSchedule = require('../model/Subject-Schedule');
 
 const CustomError = require('../errors');
 const moment = require('moment');
@@ -9,6 +9,7 @@ const CheckStudentAvailability = async({studentId , classTimeStart , classTimeDi
     if(!studentId || !classTimeStart || !classTimeDismiss) {
         throw new CustomError.BadRequestError('Please provide Student ID and Time Schedule');
     }
+
     
     const scheduleLists = await StudentSchedule.find({student : studentId});
 
@@ -16,22 +17,25 @@ const CheckStudentAvailability = async({studentId , classTimeStart , classTimeDi
     
     for(const sched of scheduleLists) {
 
-        const subjectSchedule = await SubjecSchedule.findOne({_id : sched.subjectSchedule})
+        const subjectSchedule = await SubjectSchedule.findOne({_id : sched.subjectSchedule.toString()})
 
-        const StartTime =  moment(subjectSchedule.classTimeStart , [moment.ISO_8601, 'HH:mm']);
+        if(subjectSchedule) {
 
-        const EndTime = moment(subjectSchedule.classTimeDismiss , [moment.ISO_8601, 'HH:mm']);
+            const StartTime =  moment(subjectSchedule.classTimeStart , [moment.ISO_8601, 'HH:mm']);
 
-        const newSchedStart = moment(classTimeStart , [moment.ISO_8601, 'HH:mm']);
+            const EndTime = moment(subjectSchedule.classTimeDismiss , [moment.ISO_8601, 'HH:mm']);
 
-        const newSchedEnd = moment(classTimeDismiss , [moment.ISO_8601, 'HH:mm']);
+            const newSchedStart = moment(classTimeStart , [moment.ISO_8601, 'HH:mm']);
 
-        if(newSchedStart.isBetween(StartTime , EndTime) || StartTime.isSame(newSchedStart)) {
-            return isAvailable = false;
-        }
+            const newSchedEnd = moment(classTimeDismiss , [moment.ISO_8601, 'HH:mm']);
 
-        if(newSchedEnd.isBetween(StartTime , EndTime) || newSchedEnd.isSame(EndTime)) {
-            return isAvailable = false;
+            if(newSchedStart.isBetween(StartTime , EndTime) || StartTime.isSame(newSchedStart)) {
+                return isAvailable = false;
+            }
+
+            if(newSchedEnd.isBetween(StartTime , EndTime) || newSchedEnd.isSame(EndTime)) {
+                return isAvailable = false;
+            }
         }
     }
 
@@ -45,7 +49,7 @@ const CheckTeacherAvailability = async({teacherId , classTimeStart , classTimeDi
         throw new CustomError.BadRequestError('Please provide Teacher ID and Time Schedule');
     }
     
-    const scheduleLists = await SubjecSchedule.find({teacher : teacherId});
+    const scheduleLists = await SubjectSchedule.find({teacher : teacherId});
 
     let isAvailable = true;
     

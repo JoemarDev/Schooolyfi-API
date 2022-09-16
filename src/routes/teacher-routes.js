@@ -17,7 +17,7 @@ const {
 } = require('../controller/teacher-controller');
 
 router.route('/')
-    .get(AuthenticateUser,AuthorizedPermission('admin'),getAllTeacher)
+    .get(AuthenticateUser,AuthorizedPermission('admin' , 'all'),getAllTeacher)
     .post(AuthenticateUser,AuthorizedPermission('admin','all'),createTeacher);
 
 router.route('/schedule').get(AuthenticateUser,AuthorizedPermission('admin' , 'teacher'),getTeacherSchedule);

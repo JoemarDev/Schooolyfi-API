@@ -1,13 +1,17 @@
 # School System API
 
-## Progress Logs
+* This API is still on progress
+* Feel Free to contribute 
 
-### v0.0.1
+
+## ChangeLogs
+
+### v0.0.1 (09/14/22)
 1. Create Schema Model for Student , Teacher , Subject 
 2. Create Controller for the models
 3. Add CRUD Functionality in controllers.
 
-### v0.0.2
+### v0.0.2 (09/15/22)
 1. Add Authentication for teacher and students (Cookies , JWT , Middleware)
 2. Teacher routes is not allowed for students cookies
 3. Add Profile Routes for Teacher and Student 
@@ -23,15 +27,30 @@
     - Teacher Info
 
 
-### TODO for v0.0.3
-1. Able to change the subject schedule 
-    - Checks if it will have conflict to other subject
+### v0.0.3 (09/16/22)
+1. Refractor Student Schedule and Subject Schedule Controller and convert it to One Controller as ScheduleController
 2. Able to remove the subject schedule from student.
-3. Able to remove the subject to teacher
-4. Clean then authentication middlewares in route files.
-5. Able to assign fixed subject to student
+3. Able to change the subject schedule 
+    - Checks if it will have conflict to other subject
+    - Pick from the subject schedule that already assign from the teacher.
+4. Clean then authentication middlewares in route files. Add All Persmision to middleware to temporary access all functionality whoever is login
+5. Add Routes to get student schedule information
+6. New Models 
+    - Quiz
+    - Exam,
+
+
+### TODO for v0.0.4
+1. Able to remove the subject to teacher
+    - Remove Also From The Student Schedule
+2. Able to assign fixed subject to student
     - Student not allowed to have all the subject
     - route for assigining a subject to student
-6. Add QUIZ , ATTENDANCE , REPORT , EXAM , RECITATION MODEL
-
-
+3. Add  ATTENDANCE , Project , Activity , MODEL
+    - CRUD
+    - Average Computation
+4. Add Student Subject
+    - List all the subject that assign on the student
+    - Get All Student 
+5. Student Daily Stats
+6. Lesson Plan

@@ -3,18 +3,15 @@ const router = express.Router();
 
 const {
     AssignSubjectToTeacher,
-    RemoveSubjectToTeacher,
-    FindSubjectTeacherForStudent,
     FindAvailableTeacherForSubject
-} = require('../controller/subject-schedule-controller');
+} = require('../controller/schedule-controller');
     
+
 router.route('/assign-subject-to-teacher')
     .post(AssignSubjectToTeacher);
 
 router.route('/:subject_id')
     .get(FindAvailableTeacherForSubject)
-    .post(FindSubjectTeacherForStudent)
-    .delete(RemoveSubjectToTeacher)
    
 
 

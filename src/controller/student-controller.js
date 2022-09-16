@@ -109,7 +109,9 @@ const removeStudent = async(req,res) => {
 }
 
 const getStudentSchedule = async(req,res) => {
-    const studentSchedule = await StudentSchedule.find({})
+    const {user_id} = req.user;
+
+    const studentSchedule = await StudentSchedule.find({student : user_id})
         .select('-student')
         .populate({path : 'subjectSchedule' , populate : {
             path : 'teacher',
