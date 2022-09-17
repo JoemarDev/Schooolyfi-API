@@ -17,10 +17,11 @@ const {
 
 const CreateStudentSubjectSchedule = async(req,res) => {
 
-    const {subjectSchedule} = req.body;
+    const {subjectSchedule ,  student} = req.body;
 
-    if(!subjectSchedule) {
-        throw new CustomError.BadRequestError('Please provide a subject schedule id');
+    if(!subjectSchedule || !student) {
+
+        throw new CustomError.BadRequestError('Please provide a subject schedule id , student ID');
     }
 
     const Schedule = await SubjectSchedule.findOne({_id : subjectSchedule});
@@ -35,20 +36,18 @@ const CreateStudentSubjectSchedule = async(req,res) => {
         throw new CustomError.BadRequestError("Student already have this subject. Please select another one.")
     }
 
-    req.body.student = req.user.user_id;
-    
     const isStudentAvailable = await CheckStudentAvailability({
-        studentId : req.user.user_id , 
+        studentId : student , 
         classTimeStart : Schedule.classTimeStart , 
         classTimeDismiss : Schedule.classTimeDismiss,
     });
 
     if(!isStudentAvailable) {
         throw new CustomError.BadRequestError(`Student is not available on provide schedule`)
-    }
+    }   
 
     const studentSchedule = await StudentSchedule.create(req.body);
-
+    
     res.status(StatusCodes.CREATED).json(studentSchedule); 
 }
 

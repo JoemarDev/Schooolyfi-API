@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const StudentSchedule = require('./Student-Schedule');
 
 const SubjecScheduleSchema = mongoose.Schema({
     teacher : {
@@ -26,6 +27,17 @@ const SubjecScheduleSchema = mongoose.Schema({
 }, {timestamps : true},{
     toJSON: { virtuals: true },
     toObject: { virtuals: true }
+});
+
+SubjecScheduleSchema.virtual('student_schedules' , {
+    ref : 'Student_Schedule',
+    localField : '_id',
+    foreignField : 'subjectSchedule',
+    justOne : false,
+});
+
+SubjecScheduleSchema.pre('remove' , async function(next)  {
+    await this.model('Student_Schedule').deleteMany({subjectSchedule : this._id}); 
 });
 
 module.exports = mongoose.model('Subject_Schedule' , SubjecScheduleSchema);

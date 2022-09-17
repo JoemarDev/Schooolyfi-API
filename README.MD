@@ -1,4 +1,5 @@
-# School System API
+![Alt text](logo.jpg?raw=true "Hero")
+# Schooolify API
 
 * This API is still on progress
 * Feel Free to contribute 
@@ -39,18 +40,30 @@
     - Quiz
     - Exam,
 
-
-### TODO for v0.0.4
-1. Able to remove the subject to teacher
+### v0.0.4 (09/17/22)
+1. Get teacher Schedule
+2. Get all the student list from the subject that is scheduled to teacher.
+3. Update the Create Student Subject Schedule 
+    - from receving the student from the cookie
+    - to manually add it from body.
+4. Able to remove the subject to teacher
     - Remove Also From The Student Schedule
+5. Able to update the teacher from shedule
+
+
+### TODO for v0.0.5
+
+1. Add Student Subject
+    - List all the subject that assign on the student
+    - Get All Student 
+
 2. Able to assign fixed subject to student
     - Student not allowed to have all the subject
     - route for assigining a subject to student
+
 3. Add  ATTENDANCE , Project , Activity , MODEL
     - CRUD
     - Average Computation
-4. Add Student Subject
-    - List all the subject that assign on the student
-    - Get All Student 
-5. Student Daily Stats
-6. Lesson Plan
+
+4. Student Daily Stats
+5. Lesson Plan

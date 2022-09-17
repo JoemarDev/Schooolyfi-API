@@ -1,9 +1,9 @@
 const Teacher = require('../model/Teacher');
-const ClassSchedule = require('../model/Student-Schedule');
+const SubjectSchedule = require('../model/Subject-Schedule');
 const {StatusCodes} = require('http-status-codes');
 const {paginateResult} = require('../util');
 const CustomError = require('../errors/index');
-const mongoose = require('mongoose');
+const StudentSchedule = require('../model/Student-Schedule');
 
 
 const createTeacher = async(req,res) => {
@@ -122,8 +122,68 @@ const getTeacherProfile = async(req,res) => {
 }
 
 const getTeacherSchedule = async(req,res) => {
-   
-    res.status(StatusCodes.OK).send("Teacher Schedule");
+    
+    let schedule = await SubjectSchedule.find({teacher : req.user.user_id})
+        .populate({path : 'subject' , select : 'name code description'});
+    
+    res.status(StatusCodes.OK).json(schedule);
+}
+
+const GetTeacherStudentLists = async(req , res) => {
+
+    const {id} = req.params;
+
+    const schedule = await SubjectSchedule.findOne({_id : id});
+
+    if(!schedule) {
+        throw new CustomError.BadRequestError(`There is no Schedule with id : ${id}`)
+    }
+    const TeacherStudentsLists = await StudentSchedule.find({subjectSchedule : id})
+        .populate({path : 'student' , select : 'firstName lastName email'});
+
+    res.status(StatusCodes.OK).json(TeacherStudentsLists);
+
+}
+
+const RemoveSubjectScheduleFromTeacher = async(req ,res) => {
+
+    const {id} = req.params;
+
+    const TeacherSchedule = await SubjectSchedule.findOne({_id : id});
+
+    if(!TeacherSchedule) {
+        throw new CustomError.BadRequestError(`There is no schedule with id : ${id}`);
+    }
+
+    await TeacherSchedule.remove();
+
+    res.status(StatusCodes.OK).send("Schedule Remove Successfully");
+}
+
+const ChangeAssignTeacherFromTheSchedule = async(req, res) => {
+    const {sheduleId , newTeacherId} = req.body;
+
+    if(!sheduleId || !newTeacherId) {
+        throw new CustomError.BadRequestError('Please provide Shedule Id and new Teacher ID');
+    }
+    const TeacherSchedule = await SubjectSchedule.findOne({_id : sheduleId});
+
+    if(!TeacherSchedule) {
+        throw new CustomError.NotFoundError(`There is no schedule with id : ${sheduleId}`);
+    }
+
+    const teacher = Teacher.findOne({_id : newTeacherId});
+
+    if(!teacher) {
+        throw new CustomError.NotFoundError(`There is no teacher with id : ${Teacher}`);
+    }
+
+    TeacherSchedule.teacher = newTeacherId;
+
+    await TeacherSchedule.save();
+
+    res.status(StatusCodes.OK).json(TeacherSchedule);
+
 }
 
 module.exports = {
@@ -133,5 +193,8 @@ module.exports = {
     updateTeacher,
     removeTeacher,
     getTeacherSchedule,
-    getTeacherProfile
+    getTeacherProfile,
+    GetTeacherStudentLists,
+    RemoveSubjectScheduleFromTeacher,
+    ChangeAssignTeacherFromTheSchedule
 }
