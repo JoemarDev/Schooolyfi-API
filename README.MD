@@ -5,7 +5,7 @@
 * Feel Free to contribute 
 
 
-## ChangeLogs
+## Change Logs
 
 ### v0.0.1 (09/14/22)
 1. Create Schema Model for Student , Teacher , Subject 
