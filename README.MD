@@ -1,4 +1,4 @@
-![Alt text](logo.jpg?raw=true "Hero")
+![Alt text](https://raw.githubusercontent.com/JoemarDev/School-System-API/main/logo.png)
 # Schooolify API
 
 * This API is still on progress
