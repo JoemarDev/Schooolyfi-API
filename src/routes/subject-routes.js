@@ -6,7 +6,8 @@ const {
     getAllSujects,
     getSingleSubjects,
     updateSubject,
-    removeSubject
+    removeSubject,
+    GetSubjectLessonPlan
 } = require('../controller/subject-controller');
 
 // Middlewares
@@ -15,11 +16,13 @@ const {AuthenticateUser , AuthorizedPermission} = require('../middleware/authent
 
 router.route('/')
     .get(AuthenticateUser,getAllSujects)
-    .post(AuthenticateUser,AuthorizedPermission('admin' , 'teacher'),createSubject);
+    .post(AuthenticateUser,AuthorizedPermission('admin' , 'teacher' , 'all'),createSubject);
+
+router.route('/:id/lesson-plans').get(GetSubjectLessonPlan);
 
 router.route('/:id')
     .get(AuthenticateUser,getSingleSubjects)
     .patch(AuthenticateUser,AuthorizedPermission('admin'),updateSubject)
-    .delete(AuthenticateUser,AuthorizedPermission('admin'),removeSubject);
+    .delete(AuthenticateUser,AuthorizedPermission('admin' ,'all'),removeSubject);
 
 module.exports = router;

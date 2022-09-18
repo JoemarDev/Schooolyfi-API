@@ -19,6 +19,8 @@ const subjectRouter = require('./src/routes/subject-routes');
 const studentScheduleRouter = require('./src/routes/student-schedule-route');
 const authenticationRouter = require('./src/routes/authentication-route');
 const subjectScheduleRouter = require('./src/routes/subject-schedule');
+const courseRouter = require('./src/routes/course-route');
+const lessonPlanController = require('./src/routes/lesson-plan-routes');
 
 
 
@@ -40,14 +42,15 @@ app.use('/api/v1/students',studentRouter);
 app.use('/api/v1/teachers' , teacherRouter);
 app.use('/api/v1/subjects' , subjectRouter);
 app.use('/api/v1/student-schedule' , studentScheduleRouter);
-app.use('/api/v1/subject-schedule' , subjectScheduleRouter)
-app.use('/api/v1/auth' , authenticationRouter)
+app.use('/api/v1/subject-schedule' , subjectScheduleRouter);
+app.use('/api/v1/course' , courseRouter);
+app.use('/api/v1/auth' , authenticationRouter);
+app.use('/api/v1/lesson-plan' , lessonPlanController);
 
 
 // use middlewares
 app.use(NotFoundMiddleware);
 app.use(ErrorHandlerMiddlware);
-
 
 const port = process.env.PORT || 3000;
 

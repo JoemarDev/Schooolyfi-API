@@ -2,7 +2,7 @@
 # Schooolify API
 
 * This API is still on progress
-* Feel Free to contribute 
+* You can check the (Prototype) API Documention in this link [Schooolify API](https://documenter.getpostman.com/view/16604401/2s7Ymz8Ma7).
 
 
 ## Change Logs
@@ -11,6 +11,7 @@
 1. Create Schema Model for Student , Teacher , Subject 
 2. Create Controller for the models
 3. Add CRUD Functionality in controllers.
+
 
 ### v0.0.2 (09/15/22)
 1. Add Authentication for teacher and students (Cookies , JWT , Middleware)
@@ -51,19 +52,28 @@
 5. Able to update the teacher from shedule
 
 
-### TODO for v0.0.5
+### v0.0.5 (09/18/22)
+1. Add .env_example
+2. Course
+    - Create a model for COURSE
+    - CRUD IMPLEMENTATION
+    - Course must have a subject list from (SUBJECT MODEL)
+    - Able to get all the student have this course
 
-1. Add Student Subject
-    - List all the subject that assign on the student
-    - Get All Student 
+3. Subject Model 
+    - Must have a lesson plan (Lesson Plan Model)
+    - Able to show all the lesson plan for the subjects.
 
-2. Able to assign fixed subject to student
-    - Student not allowed to have all the subject
-    - route for assigining a subject to student
+4. Lesson Plan
+    - Create a model for LessonPlan
+    - CRUD IMPLEMENTATION
 
-3. Add  ATTENDANCE , Project , Activity , MODEL
+5. Able to check all the students Subjects
+
+
+### TODO for v0.0.6
+
+1. Add  ATTENDANCE , Project , Activity , MODEL
     - CRUD
     - Average Computation
-
-4. Student Daily Stats
-5. Lesson Plan
+2. Student Daily Stats

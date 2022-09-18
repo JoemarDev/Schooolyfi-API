@@ -2,6 +2,7 @@ const CustomError = require('../errors/index');
 const {StatusCodes} = require('http-status-codes');
 const Student = require('../model/Student');
 const StudentSchedule = require('../model/Student-Schedule');
+const Subject = require('../model/Subject');
 
 const {paginateResult} = require('../util');
 
@@ -137,6 +138,18 @@ const getStudentProfile = async(req,res) => {
     res.status(StatusCodes.OK).json({student});
 }
 
+const GetStudentSubjects = async(req,res) => {
+
+    const {id} = req.params;
+
+    const student = await Student.findOne({_id : id});
+
+    const subjects = await Subject.find({course : student.course});
+
+    res.status(StatusCodes.OK).json(subjects);
+
+}
+
 
 
 
@@ -148,5 +161,6 @@ module.exports = {
     removeStudent,
     createStudents,
     getStudentSchedule,
-    getStudentProfile
+    getStudentProfile,
+    GetStudentSubjects
 }

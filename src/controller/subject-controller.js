@@ -1,5 +1,6 @@
 const CustomError = require('../errors');
 const Subject = require('../model/Subject');
+const LessonPlan = require('../model/Lesson-Plan');
 const { StatusCodes } = require('http-status-codes');
 
 const createSubject = async(req,res) => {
@@ -57,10 +58,17 @@ const removeSubject = async(req,res) => {
     res.status(StatusCodes.OK).send("Remove Subject");
 }
 
+const GetSubjectLessonPlan = async(req,res) => {
+    const {id} = req.params;
+    const lessonPlans = await LessonPlan.find({subject : id});
+    res.status(StatusCodes.OK).json(lessonPlans);
+}
+
 module.exports = {
     createSubject,
     getAllSujects,
     getSingleSubjects,
     updateSubject,
-    removeSubject
+    removeSubject,
+    GetSubjectLessonPlan
 }

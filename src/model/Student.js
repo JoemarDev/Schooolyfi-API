@@ -48,6 +48,11 @@ const StudentSchema = mongoose.Schema({
         required : [true , 'Please provde student phone number'],
         unique: true,
     },
+    course : {
+        type : mongoose.Types.ObjectId,
+        ref : 'Course',
+        required : [true , 'Please provide a student course']
+    }
 });
 
 StudentSchema.pre('save', async function() {
