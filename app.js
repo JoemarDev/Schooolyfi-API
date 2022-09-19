@@ -20,8 +20,9 @@ const studentScheduleRouter = require('./src/routes/student-schedule-route');
 const authenticationRouter = require('./src/routes/authentication-route');
 const subjectScheduleRouter = require('./src/routes/subject-schedule');
 const courseRouter = require('./src/routes/course-route');
-const lessonPlanController = require('./src/routes/lesson-plan-routes');
-
+const lessonPlanRouter = require('./src/routes/lesson-plan-routes');
+const examRouter = require('./src/routes/exam-route');
+const quizRouter = require('./src/routes/quiz-route');
 
 
 // Middlewares
@@ -45,7 +46,9 @@ app.use('/api/v1/student-schedule' , studentScheduleRouter);
 app.use('/api/v1/subject-schedule' , subjectScheduleRouter);
 app.use('/api/v1/course' , courseRouter);
 app.use('/api/v1/auth' , authenticationRouter);
-app.use('/api/v1/lesson-plan' , lessonPlanController);
+app.use('/api/v1/lesson-plan' , lessonPlanRouter);
+app.use('/api/v1/exam', examRouter);
+app.use('/api/v1/quiz', quizRouter);
 
 
 // use middlewares

@@ -59,19 +59,27 @@
     - CRUD IMPLEMENTATION
     - Course must have a subject list from (SUBJECT MODEL)
     - Able to get all the student have this course
-
 3. Subject Model 
     - Must have a lesson plan (Lesson Plan Model)
     - Able to show all the lesson plan for the subjects.
-
 4. Lesson Plan
     - Create a model for LessonPlan
     - CRUD IMPLEMENTATION
-
 5. Able to check all the students Subjects
 
 
-### TODO for v0.0.6
+### v0.0.6 (09/19/22)
+1. Remove Quiz model 
+    - Rerfractor , Join it in Exam Model.
+2. Implement Exam CRUD
+    - Able to automatically compute the average of the exams
+    - exam can only be add based on the subject and the course of students as well quiz.
+    - add enum attributes (exam, quiz)
+3. Combine Exam and Quiz Controller 
+    - Add Middleware in the routes to identify the type of exam
+
+
+### TODO for v0.0.7
 
 1. Add  ATTENDANCE , Project , Activity , MODEL
     - CRUD
