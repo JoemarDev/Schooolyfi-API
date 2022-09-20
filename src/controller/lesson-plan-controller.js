@@ -37,6 +37,10 @@ const UpdateLessonPlan = async(req,res) => {
         {new : true , runValidators : true}
     );
 
+    if(!lessonPlan) {
+        throw new CustomError.NotFoundError(`No lesson plan with id : ${id}`);
+    }
+
     res.status(StatusCodes.OK).json(lessonPlan);
 };
 

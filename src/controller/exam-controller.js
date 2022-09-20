@@ -7,13 +7,11 @@ const {StatusCodes} = require('http-status-codes');
 
 const CreateExamResult = async(req,res) => {
 
-    const {student , subject , teacher , score , totalQuestion} = req.body;
+    const {student , subject , teacher } = req.body;
     
     if(!student || !subject || !teacher ) {
         throw new CustomError.BadRequestError('Please provide student , subject , teacher');
     }
-
-
 
     const teacherInformation = await Teacher.findOne({_id : teacher});
 
@@ -55,7 +53,7 @@ const GetSingleExamResult = async(req,res) => {
 
     const  {id} = req.params;
 
-    const exam = await Exam.findOne({_id : id});
+    const exam = await Exam.findOne({_id : id , type : req.body.type});
 
     if(!exam) {
         throw new CustomError.NotFoundError(`No Exam with id : ${id}`);
@@ -69,7 +67,7 @@ const RemoveExamResult = async(req,res) => {
 
     const  {id} = req.params;
 
-    const exam = Exam.findOne({_id : id});
+    const exam = Exam.findOne({_id : id , type : req.body.type});
 
     if(!exam) {
         throw new CustomError.NotFoundError(`No Exam with id : ${id}`);
@@ -87,7 +85,7 @@ const UpdateExamResult = async(req,res) => {
     const {score , totalQuestion} = req.body;
 
     
-    const exam = await Exam.findOne({_id : id});
+    const exam = await Exam.findOne({_id : id , type : req.body.type});
 
     if(!exam) {
         throw new CustomError.NotFoundError(`No Exam with id : ${id}`);

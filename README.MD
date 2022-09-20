@@ -79,9 +79,21 @@
     - Add Middleware in the routes to identify the type of exam
 
 
-### TODO for v0.0.7
+### v0.0.7 (09/20/22)
+1. Implement Attendace 
+    - CRUD Features
+    - Student must have only 1 attendace perday
+    - attendance must be under in the subject
+    - check if the student is own the subject
+2. Create a route where it can calculate the average attendance of the student
+3. Implement Project & Activity
+    - CRUD Implementation
+    - Subject Student Course Validator
+4. Check student Subject Average
 
-1. Add  ATTENDANCE , Project , Activity , MODEL
-    - CRUD
-    - Average Computation
-2. Student Daily Stats
+### TODO for v0.0.8
+
+1. Create a Model for Grading Formula
+2. Check Student Total Average
+3. Create Populate Script
+4. Update the ResetDatabase Script.

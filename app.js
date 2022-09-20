@@ -23,7 +23,10 @@ const courseRouter = require('./src/routes/course-route');
 const lessonPlanRouter = require('./src/routes/lesson-plan-routes');
 const examRouter = require('./src/routes/exam-route');
 const quizRouter = require('./src/routes/quiz-route');
-
+const attendanceRouter = require('./src/routes/attendance-route');
+const projectRouter = require('./src/routes/project-route');
+const activityRouter = require('./src/routes/activity-route');
+const studentAverage = require('./src/routes/average-route');
 
 // Middlewares
 const NotFoundMiddleware = require('./src/middleware/not-found-middleware');
@@ -49,6 +52,10 @@ app.use('/api/v1/auth' , authenticationRouter);
 app.use('/api/v1/lesson-plan' , lessonPlanRouter);
 app.use('/api/v1/exam', examRouter);
 app.use('/api/v1/quiz', quizRouter);
+app.use('/api/v1/attendance',attendanceRouter);
+app.use('/api/v1/project', projectRouter);
+app.use('/api/v1/activity', activityRouter);
+app.use('/api/v1/student-average', studentAverage);
 
 
 // use middlewares

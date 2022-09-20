@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {AssignExamType} = require('../middleware/activity-middleware');
+const {AssignPropertyType} = require('../middleware/activity-middleware');
 const {
     CreateExamResult,
     GetAllExamResult,
@@ -13,13 +13,13 @@ const {
 
 
 router.route('/')
-    .get(AssignExamType('quiz'),GetAllExamResult)
-    .post(AssignExamType('quiz'),CreateExamResult);
+    .get(AssignPropertyType('quiz'),GetAllExamResult)
+    .post(AssignPropertyType('quiz'),CreateExamResult);
 
 router.route('/:id')
-    .get(AssignExamType('quiz'),GetSingleExamResult)
-    .delete(AssignExamType('quiz'),RemoveExamResult)
-    .patch(AssignExamType('quiz'),UpdateExamResult);
+    .get(AssignPropertyType('quiz'),GetSingleExamResult)
+    .delete(AssignPropertyType('quiz'),RemoveExamResult)
+    .patch(AssignPropertyType('quiz'),UpdateExamResult);
 
     
     

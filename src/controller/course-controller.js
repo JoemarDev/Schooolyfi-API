@@ -53,6 +53,10 @@ const updateCourseInformation = async(req,res) => {
         {new : true , runValidators : true}
     );
     
+    if(!course) {
+        throw new CustomError.NotFoundError(`No course with id : ${id}`);
+    }
+
     res.status(StatusCodes.OK).json(course);
 };
 
