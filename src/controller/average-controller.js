@@ -1,59 +1,62 @@
 const Subject = require('../model/Subject');
 const Student = require('../model/Student');
 const CustomError = require('../errors');
-const Attendance = require('../model/Attendance');
+const GradingFormula = require('../model/GradingFormula');
+
 const { StatusCodes } = require('http-status-codes');
 
-const {ComputeSubjectAttendance , ComputeExamOrQuiz , ComputeProjectOrActivity} = require('../util');
+const { ComputeSubjectAttendance, ComputeExamOrQuiz, ComputeProjectOrActivity, GetAverageFormula } = require('../util');
 
-const GetSubjectAverage = async(req,res) => {
+const GetSubjectAverage = async (req, res) => {
 
-    const {student:studentId , subject : subjectId} = req.body;
+    const { student: studentId, subject: subjectId } = req.body;
 
-    if(!studentId || !subjectId) {
+    if (!studentId || !subjectId) {
         throw new CustomError.BadRequestError('Please provide a student and subject');
     }
 
-    const student = await Student.findOne({_id : studentId});
+    const student = await Student.findOne({ _id: studentId });
 
-    if(student.length == 0) {
+    if (student.length == 0) {
         throw new CustomError.NotFoundError(`No Student with id :${studentId}`)
     }
 
-    const subject = await Subject.findOne({_id : subjectId});
+    const subject = await Subject.findOne({ _id: subjectId });
 
-    if(subject.length == 0) {
+    if (subject.length == 0) {
         throw new CustomError.NotFoundError(`No Subject with id :${subjectId}`)
     }
-    
 
-    if(student.course.toString() != subject.course.toString()) {
+
+    if (student.course.toString() != subject.course.toString()) {
         throw new CustomError.BadRequestError('This subject is not related to student.');
     }
 
 
     let averageInformation = {};
 
-    averageInformation['attendance'] = await ComputeSubjectAttendance({subjectId , studentId});
-    averageInformation['quiz'] = await ComputeExamOrQuiz({subjectId , studentId , type : 'quiz'});
-    averageInformation['exam'] = await ComputeExamOrQuiz({subjectId , studentId , type : 'exam'});
-    averageInformation['project'] = await ComputeProjectOrActivity({subjectId , studentId , type : 'project'});
-    averageInformation['activiy'] = await ComputeProjectOrActivity({subjectId , studentId , type : 'activiy'});
-    
-    const totalSubjectAverage = 
-    (averageInformation['attendance']['average'] * 0.10) +  
-    (averageInformation['quiz']['average'] * 0.15) +  
-    (averageInformation['exam']['average'] * 0.40) +  
-    (averageInformation['project']['average'] * 0.20) +  
-    (averageInformation['activiy']['average'] * 0.10);
+    averageInformation['attendance'] = await ComputeSubjectAttendance({ subjectId, studentId });
+    averageInformation['quiz'] = await ComputeExamOrQuiz({ subjectId, studentId, type: 'quiz' });
+    averageInformation['exam'] = await ComputeExamOrQuiz({ subjectId, studentId, type: 'exam' });
+    averageInformation['project'] = await ComputeProjectOrActivity({ subjectId, studentId, type: 'project' });
+    averageInformation['activity'] = await ComputeProjectOrActivity({ subjectId, studentId, type: 'activity' });
+
+    const formula = await GetAverageFormula();
 
 
-    res.status(StatusCodes.OK).json({averageInformation, totalSubjectAverage});
-    
+    const totalSubjectAverage =
+        (averageInformation['attendance']['average'] * Number(formula['attendance'])) +
+        (averageInformation['quiz']['average'] * Number(formula['quiz'])) +
+        (averageInformation['exam']['average'] * Number(formula['exam'])) +
+        (averageInformation['project']['average'] * Number(formula['project'])) +
+        (averageInformation['activity']['average'] * Number(formula['activity']));
+
+    res.status(StatusCodes.OK).json({ averageInformation, totalSubjectAverage });
+
 }
 
 
-const GetStudentTotalAverage = async(req,res) => {
+const GetStudentTotalAverage = async (req, res) => {
     res.send("Get Student Total Average");
 }
 

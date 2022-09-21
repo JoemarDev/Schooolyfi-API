@@ -26,7 +26,8 @@ const quizRouter = require('./src/routes/quiz-route');
 const attendanceRouter = require('./src/routes/attendance-route');
 const projectRouter = require('./src/routes/project-route');
 const activityRouter = require('./src/routes/activity-route');
-const studentAverage = require('./src/routes/average-route');
+const studentAverageRouter = require('./src/routes/average-route');
+const gradingFormulaRouter = require('./src/routes/grading-formula-route');
 
 // Middlewares
 const NotFoundMiddleware = require('./src/middleware/not-found-middleware');
@@ -35,27 +36,28 @@ const ErrorHandlerMiddlware = require('./src/middleware/error-handler');
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use(mongoSanitize());
-app.use(cookieParser(process.env.JWT_SECRET))
+app.use(cookieParser(process.env.JWT_SECRET));
 
-app.get('/' , (req,res) => {
+app.get('/', (req, res) => {
     res.send("Welcome to School Management API's");
 });
 
 // use routers
-app.use('/api/v1/students',studentRouter);
-app.use('/api/v1/teachers' , teacherRouter);
-app.use('/api/v1/subjects' , subjectRouter);
-app.use('/api/v1/student-schedule' , studentScheduleRouter);
-app.use('/api/v1/subject-schedule' , subjectScheduleRouter);
-app.use('/api/v1/course' , courseRouter);
-app.use('/api/v1/auth' , authenticationRouter);
-app.use('/api/v1/lesson-plan' , lessonPlanRouter);
+app.use('/api/v1/students', studentRouter);
+app.use('/api/v1/teachers', teacherRouter);
+app.use('/api/v1/subjects', subjectRouter);
+app.use('/api/v1/student-schedule', studentScheduleRouter);
+app.use('/api/v1/subject-schedule', subjectScheduleRouter);
+app.use('/api/v1/course', courseRouter);
+app.use('/api/v1/auth', authenticationRouter);
+app.use('/api/v1/lesson-plan', lessonPlanRouter);
 app.use('/api/v1/exam', examRouter);
 app.use('/api/v1/quiz', quizRouter);
-app.use('/api/v1/attendance',attendanceRouter);
+app.use('/api/v1/attendance', attendanceRouter);
 app.use('/api/v1/project', projectRouter);
 app.use('/api/v1/activity', activityRouter);
-app.use('/api/v1/student-average', studentAverage);
+app.use('/api/v1/student-average', studentAverageRouter);
+app.use('/api/v1/grading-formula', gradingFormulaRouter);
 
 
 // use middlewares
@@ -67,7 +69,7 @@ const port = process.env.PORT || 3000;
 const start = async () => {
     try {
         await connectDB(process.env.MONGO_URI);
-        app.listen(port , console.log(`Server is listening on port ${port}`));
+        app.listen(port, console.log(`Server is listening on port ${port}`));
     } catch (err) {
         console.log(err);
     }

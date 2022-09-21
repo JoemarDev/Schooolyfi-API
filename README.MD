@@ -91,9 +91,24 @@
     - Subject Student Course Validator
 4. Check student Subject Average
 
-### TODO for v0.0.8
 
-1. Create a Model for Grading Formula
-2. Check Student Total Average
-3. Create Populate Script
-4. Update the ResetDatabase Script.
+### v0.0.8 (09/21/22)
+1. Implement Grading Formula
+    - CRUD Functionality
+    - Fixed Amount of Grading Fomula 
+        Allowed :
+        - quiz
+        - attendace 
+        - exam
+        - project
+        - activity
+    - Automaticlly update the existing one , if create with the same type of fomula
+
+2. Getting the average of the student subject is based on Grading Formula
+
+
+### TODO for v0.0.9
+
+1. Check Student Total Average
+2. Create Populate Script
+3. Update the ResetDatabase Script.

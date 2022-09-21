@@ -1,7 +1,7 @@
 const paginateResult = require('./paginate');
-const {createJWT,tokenValidation,attachCookieToResponse} = require('./jwt');
-const {CheckStudentAvailability,CheckTeacherAvailability,ValidateTime,GetTimeDifference} = require('./schedule_helper');
-const {ComputeSubjectAttendance , ComputeExamOrQuiz , ComputeProjectOrActivity} = require('./average_helper');
+const { createJWT, tokenValidation, attachCookieToResponse } = require('./jwt');
+const { CheckStudentAvailability, CheckTeacherAvailability, ValidateTime, GetTimeDifference } = require('./schedule_helper');
+const { ComputeSubjectAttendance, ComputeExamOrQuiz, ComputeProjectOrActivity, GetAverageFormula } = require('./average_helper');
 
 module.exports = {
     paginateResult, //  Paginate Models
@@ -14,5 +14,6 @@ module.exports = {
     GetTimeDifference, // Aceept two values Differentiate the interval between time eg:(5:20 to 7:30) =  130 minutes ,
     ComputeSubjectAttendance,
     ComputeExamOrQuiz,
-    ComputeProjectOrActivity
+    ComputeProjectOrActivity,
+    GetAverageFormula
 };

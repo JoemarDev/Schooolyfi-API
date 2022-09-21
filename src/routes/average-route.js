@@ -9,7 +9,7 @@ const {
 router.route('/')
     .get(GetStudentTotalAverage);
 
-router.route('/:subject_id')
+router.route('/subject-average')
     .get(GetSubjectAverage);
 
 
