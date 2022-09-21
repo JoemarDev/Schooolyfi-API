@@ -37,7 +37,7 @@ const GetSubjectAverage = async (req, res) => {
 
     const QuizAndExam = await ComputeExamAndQuiz({ subjectId, studentId});
     const ActivityAndProject = await ComputeProjectAndActivity({ subjectId, studentId});
-    
+
     averageInformation['attendance'] = await ComputeSubjectAttendance({ subjectId, studentId });
     averageInformation['quiz'] = {total : QuizAndExam['total-quiz']  , average : QuizAndExam['quiz-average']};
     averageInformation['exam'] = {total : QuizAndExam['total-exams']  , average : QuizAndExam['exam-average']};
@@ -97,7 +97,6 @@ const GetStudentTotalAverage = async (req, res) => {
             (averageInformation['project']['average'] * Number(formula['project'])) +
             (averageInformation['activity']['average'] * Number(formula['activity']));
 
-            console.log(averageInformation)
         subjectsAverage = [...subjectsAverage , {subject : {name : subject.name , code : subject.code}  , totalSubjectAverage}];
     }
 
