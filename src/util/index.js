@@ -1,7 +1,7 @@
 const paginateResult = require('./paginate');
 const { createJWT, tokenValidation, attachCookieToResponse } = require('./jwt');
 const { CheckStudentAvailability, CheckTeacherAvailability, ValidateTime, GetTimeDifference } = require('./schedule_helper');
-const { ComputeSubjectAttendance, ComputeExamOrQuiz, ComputeProjectOrActivity, GetAverageFormula } = require('./average_helper');
+const { ComputeSubjectAttendance, GetAverageFormula , ComputeExamAndQuiz  , ComputeProjectAndActivity} = require('./average_helper');
 
 module.exports = {
     paginateResult, //  Paginate Models
@@ -13,7 +13,7 @@ module.exports = {
     ValidateTime, // Validate pass value get the right format and convert time to become readable
     GetTimeDifference, // Aceept two values Differentiate the interval between time eg:(5:20 to 7:30) =  130 minutes ,
     ComputeSubjectAttendance,
-    ComputeExamOrQuiz,
-    ComputeProjectOrActivity,
-    GetAverageFormula
+    GetAverageFormula,
+    ComputeExamAndQuiz,
+    ComputeProjectAndActivity
 };

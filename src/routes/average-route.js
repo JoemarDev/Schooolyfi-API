@@ -6,11 +6,11 @@ const {
     GetStudentTotalAverage
 } = require('../controller/average-controller');
 
-router.route('/')
-    .get(GetStudentTotalAverage);
-
 router.route('/subject-average')
     .get(GetSubjectAverage);
+
+router.route('/:studentId')
+    .get(GetStudentTotalAverage);
 
 
 module.exports = router;

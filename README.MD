@@ -35,7 +35,8 @@
 3. Able to change the subject schedule 
     - Checks if it will have conflict to other subject
     - Pick from the subject schedule that already assign from the teacher.
-4. Clean then authentication middlewares in route files. Add All Persmision to middleware to temporary access all functionality whoever is login
+4. Clean then authentication middlewares in route files. 
+    - Add All Persmision to middleware to temporary access all functionality whoever is login
 5. Add Routes to get student schedule information
 6. New Models 
     - Quiz
@@ -105,10 +106,10 @@
     - Automaticlly update the existing one , if create with the same type of fomula
 
 2. Getting the average of the student subject is based on Grading Formula
-
+3. Check Student Total Average
 
 ### TODO for v0.0.9
 
-1. Check Student Total Average
-2. Create Populate Script
-3. Update the ResetDatabase Script.
+1. Create Populate Script
+2. Update the ResetDatabase Script.
+3. Create Admin Account

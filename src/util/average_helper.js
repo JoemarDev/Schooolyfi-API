@@ -32,45 +32,73 @@ const ComputeSubjectAttendance = async ({ subjectId, studentId }) => {
 
 }
 
-const ComputeExamOrQuiz = async ({ subjectId, studentId, type }) => {
+const ComputeExamAndQuiz = async({ subjectId, studentId }) => {
     const exams = await Exam.find({
         subject: subjectId,
         student: studentId,
-        type: type,
     });
 
+    let examTotalAverage = 0;
+    let totalExam = 0;
+    let quizTotalAverage = 0;
+    let totalQuiz = 0;
 
-    let totalAverage = 0;
     for (const exam of exams) {
-        totalAverage += exam.average;
+        if(exam.type == 'exam') {
+            totalExam++;
+            examTotalAverage += exam.average;
+        }
+
+        if(exam.type == 'quiz') {
+            totalQuiz++;
+            quizTotalAverage += exam.average;
+        }
     }
 
     return {
-        'total': exams.length,
-        'average': Math.round(totalAverage / exams.length),
+        'total-exams' : totalExam,
+        'exam-average' :  Math.round(examTotalAverage / totalExam),
+        'total-quiz' : totalQuiz,
+        'quiz-average' :  Math.round(quizTotalAverage / totalQuiz),
     }
+    
+}
 
-};
-
-const ComputeProjectOrActivity = async ({ subjectId, studentId, type }) => {
+const ComputeProjectAndActivity =  async ({ subjectId, studentId}) => {
 
     const projects = await Project.find({
         subject: subjectId,
         student: studentId,
-        type: type,
     });
 
-    let totalAverage = 0;
+   
+    let projectTotalAverage = 0;
+    let totalProject = 0;
+    let activityTotalAverage = 0;
+    let totalActivity = 0;
+
 
     for (const project of projects) {
-        totalAverage += project.grade;
+
+        if(project.type == 'project') {
+            totalProject++;
+            projectTotalAverage += project.grade;
+        }
+
+        if(project.type == 'activity') {
+            totalActivity++;
+            activityTotalAverage += project.grade;
+        }
+
     }
+
 
     return {
-        'total': projects.length,
-        'average': Math.round(totalAverage / projects.length)
+        'total-project' : totalProject,
+        'project-average' :  Math.round(projectTotalAverage / totalProject),
+        'total-activity' : totalActivity,
+        'activity-average' :  Math.round(activityTotalAverage / totalActivity),
     }
-
 };
 
 const GetAverageFormula = async () => {
@@ -108,7 +136,7 @@ const GetAverageFormula = async () => {
 
 module.exports = {
     ComputeSubjectAttendance,
-    ComputeExamOrQuiz,
-    ComputeProjectOrActivity,
-    GetAverageFormula
+    GetAverageFormula,
+    ComputeExamAndQuiz,
+    ComputeProjectAndActivity
 }

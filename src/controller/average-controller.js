@@ -5,7 +5,7 @@ const GradingFormula = require('../model/GradingFormula');
 
 const { StatusCodes } = require('http-status-codes');
 
-const { ComputeSubjectAttendance, ComputeExamOrQuiz, ComputeProjectOrActivity, GetAverageFormula } = require('../util');
+const { ComputeSubjectAttendance, GetAverageFormula , ComputeExamAndQuiz , ComputeProjectAndActivity } = require('../util');
 
 const GetSubjectAverage = async (req, res) => {
 
@@ -35,14 +35,17 @@ const GetSubjectAverage = async (req, res) => {
 
     let averageInformation = {};
 
+    const QuizAndExam = await ComputeExamAndQuiz({ subjectId, studentId});
+    const ActivityAndProject = await ComputeProjectAndActivity({ subjectId, studentId});
+    
     averageInformation['attendance'] = await ComputeSubjectAttendance({ subjectId, studentId });
-    averageInformation['quiz'] = await ComputeExamOrQuiz({ subjectId, studentId, type: 'quiz' });
-    averageInformation['exam'] = await ComputeExamOrQuiz({ subjectId, studentId, type: 'exam' });
-    averageInformation['project'] = await ComputeProjectOrActivity({ subjectId, studentId, type: 'project' });
-    averageInformation['activity'] = await ComputeProjectOrActivity({ subjectId, studentId, type: 'activity' });
+    averageInformation['quiz'] = {total : QuizAndExam['total-quiz']  , average : QuizAndExam['quiz-average']};
+    averageInformation['exam'] = {total : QuizAndExam['total-exams']  , average : QuizAndExam['exam-average']};
+    averageInformation['project'] = {total : ActivityAndProject['total-project']  , average : ActivityAndProject['project-average']};
+    averageInformation['activity'] = {total : ActivityAndProject['total-activity']  , average : ActivityAndProject['activity-average']};
 
+  
     const formula = await GetAverageFormula();
-
 
     const totalSubjectAverage =
         (averageInformation['attendance']['average'] * Number(formula['attendance'])) +
@@ -57,7 +60,48 @@ const GetSubjectAverage = async (req, res) => {
 
 
 const GetStudentTotalAverage = async (req, res) => {
-    res.send("Get Student Total Average");
+    const {studentId} = req.params;
+
+    const student = await Student.findOne({_id : studentId});
+
+    if(!student) {
+        throw new CustomError.NotFoundError(`No student with id : ${studentId}`);
+    }
+
+
+    const subjects = await Subject.find({course : student.course});
+    
+    let subjectsAverage = [];
+
+    for(const subject of subjects) {
+
+        let averageInformation = {};
+
+        let  subjectId = subject['_id'];
+        
+        const QuizAndExam = await ComputeExamAndQuiz({ subjectId, studentId});
+        const ActivityAndProject = await ComputeProjectAndActivity({ subjectId, studentId});
+
+        averageInformation['attendance'] = await ComputeSubjectAttendance({ subjectId, studentId });
+        averageInformation['quiz'] = {total : QuizAndExam['total-quiz']  , average : QuizAndExam['quiz-average']};
+        averageInformation['exam'] = {total : QuizAndExam['total-exams']  , average : QuizAndExam['exam-average']};
+        averageInformation['project'] = {total : ActivityAndProject['total-project']  , average : ActivityAndProject['project-average']};
+        averageInformation['activity'] = {total : ActivityAndProject['total-activity']  , average : ActivityAndProject['activity-average']};
+
+        const formula = await GetAverageFormula();
+
+        const totalSubjectAverage =
+            (averageInformation['attendance']['average'] * Number(formula['attendance'])) +
+            (averageInformation['quiz']['average'] * Number(formula['quiz'])) +
+            (averageInformation['exam']['average'] * Number(formula['exam'])) +
+            (averageInformation['project']['average'] * Number(formula['project'])) +
+            (averageInformation['activity']['average'] * Number(formula['activity']));
+
+            console.log(averageInformation)
+        subjectsAverage = [...subjectsAverage , {subject : {name : subject.name , code : subject.code}  , totalSubjectAverage}];
+    }
+
+    res.status(StatusCodes.OK).json({subjectsAverage});
 }
 
 module.exports = {
