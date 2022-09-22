@@ -23,12 +23,21 @@ const CreateProject = async(req,res) => {
         throw new CustomError.NotFoundError(`No Student with id : ${student}`);
     }
     
-    // Check if the student own the subject
-    if(isSubjectExists.course.toString() != isStudentExist.course.toString()) {
-        throw new CustomError.BadRequestError('Student does not own the subject, unable to create project.')
-    }
 
-    console.log(req.body)
+    // Checking if the course is have that subject
+
+    let isSubjectOwn = false;
+
+    await isSubjectExists.course.map((item) => {
+        if(item.toString() == isStudentExist.course.toString()) {
+            isSubjectOwn = true;
+        }
+    });
+
+    if(!isSubjectOwn) {
+        throw new CustomError.BadRequestError('Adding a exam to this subject is not allowed. student must have the course that have this subject.')
+    }
+    
     const project = await Project.create(req.body);
 
     res.status(StatusCodes.CREATED).json({project});

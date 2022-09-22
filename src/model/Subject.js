@@ -15,7 +15,7 @@ const SubjectSchema = mongoose.Schema({
         default : "No Description Provided",
     },
     course : {
-        type : mongoose.Types.ObjectId,
+        type : [mongoose.Types.ObjectId],
         ref : 'Course',
         require : [true , 'Please provide a course for this subject'],
     },

@@ -39,8 +39,17 @@ const CreateAttendance = async(req,res) => {
         throw new CustomError.NotFoundError(`No subject with id : ${subject}`);
     }
 
-    // Check if the student own the subject
-    if(isSubjectExists.course.toString() != checkStudent.course.toString()) {
+    // Checking if the course is have that subject
+
+    let isSubjectOwn = false;
+
+    await isSubjectExists.course.map((item) => {
+        if(item.toString() == checkStudent.course.toString()) {
+            isSubjectOwn = true;
+        }
+    });
+
+    if(!isSubjectOwn) {
         throw new CustomError.BadRequestError('Student does not own the subject, unable to create attendace.')
     }
     

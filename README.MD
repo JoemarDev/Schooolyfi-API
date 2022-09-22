@@ -107,8 +107,18 @@
 2. Getting the average of the student subject is based on Grading Formula
 3. Check Student Total Average
 
-### TODO for v0.0.9
 
-1. Create Populate Script
-2. Update the ResetDatabase Script.
+### v0.0.9 (09/22/22)
+
+1. Work on progress populate script
+2. Re-work the codes  of checking if the subject have the course
+3. Change course data schema type of subject.
+4. Update the ResetDatabase Script
+5. Update the pre methods in Subject Model
+    - Delete all related model when the subject is deleted.
+
+
+### TODO for v0.0.9
+1. Update The Controller of creating subject , make sure that it validate the course that will be passed
+    - If the course is passed as a string convert it to array to properly handle in the mongo schema
 3. Create Admin Account

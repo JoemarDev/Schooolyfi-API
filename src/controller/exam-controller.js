@@ -31,11 +31,20 @@ const CreateExamResult = async(req,res) => {
         throw new CustomError.NotFoundError(`No Student with id : ${student}`);
     }
     
-    // Check if student have this subjects
+    // Checking if the course is have that subject
 
-    if(studentInformation.course.toString() != subjectInformation.course.toString()) {
-        throw new CustomError.BadRequestError('Adding a exam to this subject is not allowed. student must have the course that have this subject.')
+    let isSubjectOwn = false;
+
+    await subjectInformation.course.map((item) => {
+        if(item.toString() == studentInformation.course.toString()) {
+            isSubjectOwn = true;
+        }
+    });
+
+    if(!isSubjectOwn) {
+        throw new CustomError.BadRequestError('This subject is not related to student.');
     }
+
 
     const exam = await Exam.create(req.body);
 

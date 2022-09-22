@@ -27,8 +27,17 @@ const GetSubjectAverage = async (req, res) => {
         throw new CustomError.NotFoundError(`No Subject with id :${subjectId}`)
     }
 
+    // Checking if the course is have that subject
 
-    if (student.course.toString() != subject.course.toString()) {
+    let isSubjectOwn = false;
+
+    await subject.course.map((item) => {
+        if(item.toString() == student.course.toString()) {
+            isSubjectOwn = true;
+        }
+    });
+
+    if(!isSubjectOwn) {
         throw new CustomError.BadRequestError('This subject is not related to student.');
     }
 
