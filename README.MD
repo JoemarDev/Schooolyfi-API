@@ -118,7 +118,7 @@
     - Delete all related model when the subject is deleted.
 
 
-### TODO for v0.0.9
+### TODO for v1.0.0
 1. Update The Controller of creating subject , make sure that it validate the course that will be passed
     - If the course is passed as a string convert it to array to properly handle in the mongo schema
 3. Create Admin Account
