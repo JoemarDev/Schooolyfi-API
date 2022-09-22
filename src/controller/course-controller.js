@@ -69,6 +69,8 @@ const removeCourse = async (req,res) => {
     if(!course) {
         throw new CustomError.BadRequestError(`No Course with id : ${id}`)
     }
+
+    await course.remove();
     
     res.status(StatusCodes.OK).send("Course Remove Succefully.");
 };

@@ -30,9 +30,49 @@ SubjectSchema.virtual('subject_schedules' , {
 });
 
 
+SubjectSchema.virtual('lesson_plan' , {
+    ref : 'LessonPlan',
+    localField : '_id',
+    foreignField : 'lesson_plan',
+    justOne : false,
+});
+
+
+SubjectSchema.virtual('exam' , {
+    ref : 'Exam',
+    localField : '_id',
+    foreignField : 'exam',
+    justOne : false,
+});
+
+
+SubjectSchema.virtual('project' , {
+    ref : 'Project',
+    localField : '_id',
+    foreignField : 'project',
+    justOne : false,
+});
+
+SubjectSchema.virtual('attendance' , {
+    ref : 'Attendance',
+    localField : '_id',
+    foreignField : 'attendance',
+    justOne : false,
+});
+
+
+
+
+
+
 SubjectSchema.pre('remove' , async function(next)  {
     await this.model('Subject_Schedule').deleteMany({subject : this._id}); 
+    await this.model('LessonPlan').deleteMany({lesson_plan : this._id}); 
+    await this.model('Exam').deleteMany({exam : this._id}); 
+    await this.model('Project').deleteMany({project : this._id}); 
+    await this.model('Attendance').deleteMany({attendance : this._id}); 
 });
+
 
 
 module.exports = mongoose.model('Subject' , SubjectSchema);

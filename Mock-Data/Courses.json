@@ -1,0 +1,22 @@
+[
+    {
+        "name" : "Bachelor of Science in Computer Science",
+        "code" : "BSCS",
+        "description" : " is a four-year degree program in the Philippines that is generally concerned with the effective use of computation methods to analyze, solve, and come up with practical solutions for different problems, often through the use of computers or computer programs designed to perform specific tasks."
+    },
+    {
+        "name" : "Bachelor of Science in Information Technology",
+        "code" : "BSIT",
+        "description" : " is a four-year degree program in the Philippines that deals with the processing and distribution of data with emphasis on its application on businesses."
+    },
+    {
+        "name" : "Bachelor of Science in Information Systems",
+        "code" : "BSIS",
+        "description" : "  is a four-year degree program in the Philippines that will train you in designing, developing, and managing information systems such as office automation systems, transaction processing systems, transport information systems, navigation systems, and other systems that provide related services."
+    },
+    {
+        "name" : "Bachelor of Science in Mathematics",
+        "code" : "BS Math",
+        "description" : " is a four-year degree program in the Philippines that will expose you to the breadth and depth of mathematical theories, concepts, and applications in order to prepare you for future careers that require critical and analytical thinking skills."
+    }
+]

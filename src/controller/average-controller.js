@@ -78,7 +78,7 @@ const GetStudentTotalAverage = async (req, res) => {
         let averageInformation = {};
 
         let  subjectId = subject['_id'];
-        
+     
         const QuizAndExam = await ComputeExamAndQuiz({ subjectId, studentId});
         const ActivityAndProject = await ComputeProjectAndActivity({ subjectId, studentId});
 

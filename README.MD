@@ -104,7 +104,6 @@
         - project
         - activity
     - Automaticlly update the existing one , if create with the same type of fomula
-
 2. Getting the average of the student subject is based on Grading Formula
 3. Check Student Total Average
 
