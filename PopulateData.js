@@ -22,6 +22,7 @@ const CreateTeacher = async() => {
     console.log(`Add ${StudentData.length} Teacher.`);
 };
 
+
 // Populate Course
 const CreateCourse = async() => {
     for(const course of CourseData) {
