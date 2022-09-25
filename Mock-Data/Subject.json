@@ -1,0 +1,22 @@
+[
+    {
+        "name" : "English",
+        "code" : "eng"        
+    },
+    {
+        "name" : "Math",
+        "code" : "math"        
+    },
+    {
+        "name" : "Filipino",
+        "code" : "fil"        
+    },
+    {
+        "name" : "Science",
+        "code" : "Sci"        
+    },
+    {
+        "name" : "Physical Education",
+        "code" : "P.E"        
+    }
+]

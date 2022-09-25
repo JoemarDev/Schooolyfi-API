@@ -1,7 +1,7 @@
 const Student = require('../model/Student');
 const Teacher = require('../model/Teacher');
 const CustomError = require('../errors');
-const {createJWT,attachCookieToResponse} = require('../util');
+const {attachCookieToResponse} = require('../util');
 const { StatusCodes } = require('http-status-codes');
 
 const StudentLogin = async(req,res) => {

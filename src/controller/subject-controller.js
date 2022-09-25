@@ -4,6 +4,13 @@ const LessonPlan = require('../model/Lesson-Plan');
 const { StatusCodes } = require('http-status-codes');
 
 const createSubject = async (req, res) => {
+    let {courses} = req.body;
+    
+    // Check if the courses is array
+    if(!Array.isArray(courses)) {
+        courses = [courses];
+    }
+
     const subject = await Subject.create(req.body);
     res.status(StatusCodes.CREATED).json({ subject });
 }

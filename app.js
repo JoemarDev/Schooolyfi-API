@@ -28,6 +28,7 @@ const projectRouter = require('./src/routes/project-route');
 const activityRouter = require('./src/routes/activity-route');
 const studentAverageRouter = require('./src/routes/average-route');
 const gradingFormulaRouter = require('./src/routes/grading-formula-route');
+const AdminRouter = require('./src/routes/admin-routes');
 
 // Middlewares
 const NotFoundMiddleware = require('./src/middleware/not-found-middleware');
@@ -58,6 +59,7 @@ app.use('/api/v1/project', projectRouter);
 app.use('/api/v1/activity', activityRouter);
 app.use('/api/v1/student-average', studentAverageRouter);
 app.use('/api/v1/grading-formula', gradingFormulaRouter);
+app.use('/api/v1/admin', AdminRouter);
 
 
 // use middlewares

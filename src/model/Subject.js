@@ -14,7 +14,7 @@ const SubjectSchema = mongoose.Schema({
         type : String,
         default : "No Description Provided",
     },
-    course : {
+    courses : {
         type : [mongoose.Types.ObjectId],
         ref : 'Course',
         require : [true , 'Please provide a course for this subject'],
@@ -59,10 +59,6 @@ SubjectSchema.virtual('attendance' , {
     foreignField : 'attendance',
     justOne : false,
 });
-
-
-
-
 
 
 SubjectSchema.pre('remove' , async function(next)  {

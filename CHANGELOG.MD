@@ -117,8 +117,26 @@
 5. Update the pre methods in Subject Model
     - Delete all related model when the subject is deleted.
 
-
-### TODO for v1.0.0
+### v1.0.0 (09/24/22)
 1. Update The Controller of creating subject , make sure that it validate the course that will be passed
     - If the course is passed as a string convert it to array to properly handle in the mongo schema
-3. Create Admin Account
+
+
+### v1.0.1(09/25/22)
+1. Create Admin Account
+2. Create Route For Creating a admin account
+    - Check if have a existing admin account
+    - Create Route for creating admin account
+    - Can update admin password
+3. Create a authentication route for admin
+4. Create a populate script
+5. Finish Reset Database Script
+
+
+### TODO for v1.0.2
+1. Create a test script
+2. Create a swagger UI documentation
+3. Create a README Installation
+    - Provide the features of the system
+    - Provide the future feature to be realease.
+4. Make the first realease.   

@@ -81,7 +81,8 @@ const ValidateTime = async(time) => {
         "HH:mm",
         "HH:mm"
     ];
-    return moment("18:34", formats, true).isValid();
+
+    return moment(time, formats, true).isValid();
 
 };
 

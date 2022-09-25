@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const StudentSchedule = require('./Student-Schedule');
 
 const SubjecScheduleSchema = mongoose.Schema({
     teacher : {
