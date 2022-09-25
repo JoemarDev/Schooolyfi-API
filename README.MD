@@ -9,26 +9,26 @@
 [Change log records](https://github.com/JoemarDev/Schooolyfi-API/blob/main/CHANGELOG.MD)
 
 ## Installation
-- Install Required Packages
+- Install Packages
 ```bash
 npm install
 ```
-- And run
+- And Run
 ```bash
 npm run dev
 ```
 
 ## Features
-    - Authentication by jsonwebtoken and implemented via cookies. (3 types of role)
-        - Admin Account
-        - Student Account
-        - Teacher Account
-    - Student Mangement
-    - Teacher Management
-    - Subjects Management
-    - Course Management
-    - Schedule Management
-    - Grading Calculation
+- Authentication by jsonwebtoken and implemented via cookies. (3 types of role)
+    - Admin Account
+    - Student Account
+    - Teacher Account
+- Student Mangement
+- Teacher Management
+- Subjects Management
+- Course Management
+- Schedule Management
+- Grading Calculation
 
 
 ## TECH
@@ -40,4 +40,4 @@ npm run dev
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
-[MIT](https://github.com/JoemarDev/Schooolyfi-API/blob/main/LICENSE)
+[GNU General Public License v3.0](https://github.com/JoemarDev/Schooolyfi-API/blob/main/LICENSE)
