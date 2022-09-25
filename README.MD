@@ -1,6 +1,6 @@
 ![Alt text](https://raw.githubusercontent.com/JoemarDev/School-System-API/main/logo.png)
 # Schooolify API
-*  Schooolify api provides you a ready made API System for mostly used in school management system.
+Schooolify api provides you a ready made API System for mostly used in school management system.
 
 * API BETA Release(v1.0.1)
 * You can check the (Prototype) API Documention in this link [Schooolify API](https://documenter.getpostman.com/view/16604401/2s7Ymz8Ma7).
